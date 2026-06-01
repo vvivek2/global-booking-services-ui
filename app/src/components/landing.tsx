@@ -1,0 +1,76 @@
+'use client';
+
+import Image from 'next/image';
+import landingImage from './landingImage.jpeg';
+import SignInSheet from './signIn-signUp/signIn';
+
+export default function Landing() {
+
+  return (
+    <div>
+      {/* Header */}
+      <header className="bg-black">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <div className="text-white font-bold text-xl">TS Company</div>
+          <nav className="flex items-center gap-4" style={{ fontFamily: 'Arial, sans-serif' }}>
+            <a href="#" className="text-white hover:text-white whitespace-nowrap"><u>Business</u></a>
+          </nav>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section>
+        <div className="flex flex-row items-stretch gap-0">
+          <div className="flex-shrink-0 w-full min-w-0" style={{ maxWidth: 900 }}>
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9' }}>
+              <Image
+                src={landingImage}
+                alt="landingImage"
+                fill
+                loading="eager"
+                sizes="(max-width: 900px) 100vw, 900px"
+                style={{ objectFit: 'cover', objectPosition: 'left center' }}
+              />
+            </div>
+          </div>
+          <div className="flex-1 min-w-0 bg-black flex items-center justify-center">
+              <SignInSheet />
+          </div>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section className="py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-8 text-center">
+            <div>
+              <p className="text-4xl font-bold text-blue-600 mb-2">2M+</p>
+              <p className="text-gray-600">Active Users</p>
+            </div>
+            <div>
+              <p className="text-4xl font-bold text-blue-600 mb-2">500K+</p>
+              <p className="text-gray-600">Properties Listed</p>
+            </div>
+            <div>
+              <p className="text-4xl font-bold text-blue-600 mb-2">195</p>
+              <p className="text-gray-600">Countries Served</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-black text-white py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to Book?</h2>
+          <p className="text-lg mb-8 opacity-90">Join millions of travelers and start booking today</p>
+          <button className="bg-white text-blue-600 px-8 py-3 rounded-lg hover:bg-gray-100 transition text-lg font-semibold">
+            Get Started
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+
