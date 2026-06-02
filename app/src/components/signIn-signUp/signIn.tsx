@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { requestOtp, verifyOtp } from './otpApi';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -22,12 +23,51 @@ export default function SignInSheet() {
   const [showVerification, setShowVerification] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
   const [otpRequested, setOtpRequested] = useState(false);
+  const [loadingOtp, setLoadingOtp] = useState(false);
+  const [verifying, setVerifying] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const verificationIsValid = verificationCode.length === 6;
+
+  const handleRequestOtp = async () => {
+    setErrorMessage('');
+    setOtpVerified(false);
+    setLoadingOtp(true);
+    try {
+      // Call API client — do not use OTP from response even if returned
+      await requestOtp({ countryCode: code.label, mobileNumber: phone });
+      setOtpRequested(true);
+      setShowVerification(true);
+    } catch (err: any) {
+      setOtpRequested(false);
+      setErrorMessage(err?.message || 'Unable to request OTP');
+    } finally {
+      setLoadingOtp(false);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    setErrorMessage('');
+    setVerifying(true);
+    try {
+      const data = await verifyOtp({ countryCode: code.label, mobileNumber: phone, otp: verificationCode });
+      // success — proceed with app flow; do not expose OTP
+      console.log('Sign-in successful for', `${code.label}${phone}`, data);
+      setOtpVerified(true);
+      setErrorMessage('');
+      // TODO: store token / redirect
+    } catch (err: any) {
+      setOtpVerified(false);
+      setErrorMessage(err?.message || 'Enter correct OTP');
+    } finally {
+      setVerifying(false);
+    }
+  };
 
   return (
     <div className="flex h-full w-full items-center justify-center px-4 py-8">
       <div>
-        <Card style={{ minWidth: 475, minHeight: 340, backgroundColor: 'transparent', color: 'gray', boxShadow: 'none' }}>
+        <Card style={{ width: '100%', maxWidth: 475, minHeight: 340, backgroundColor: 'transparent', color: 'gray', boxShadow: 'none' }}>
           <CardContent>
             <Typography variant="h5" component="div" gutterBottom>
               Login / Sign Up
@@ -35,7 +75,14 @@ export default function SignInSheet() {
             <Typography variant="body2" color="text.secondary" gutterBottom>
               Enter your phone number with country code to login.
             </Typography>
-            <Box sx={{ display: 'flex', gap: 3, alignItems: 'flex-start', mt: 2 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: 2,
+                alignItems: 'stretch',
+              }}
+            >
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: 130 }}>
                 <Typography variant="subtitle2" sx={{ color: 'white' }}>
                   Country
@@ -84,6 +131,7 @@ export default function SignInSheet() {
                       setShowVerification(false);
                       setOtpRequested(false);
                       setVerificationCode('');
+                      setOtpVerified(false);
                     }
                   }}
                   error={phone.length > 0 && !phoneIsValid}
@@ -108,6 +156,15 @@ export default function SignInSheet() {
                   fullWidth
                   sx={{ bgcolor: 'rgb(247, 242, 242)', borderRadius: 1, mt: 1 }}
                 />
+                {otpVerified ? (
+                  <Typography variant="body2" sx={{ mt: 1, color: 'success.main', display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <span>✓</span> OTP verified
+                  </Typography>
+                ) : errorMessage ? (
+                  <Typography variant="body2" color="error" sx={{ mt: 1 }}>
+                    {errorMessage}
+                  </Typography>
+                ) : null}
               </Box>
             )}
           </CardContent>
@@ -116,25 +173,19 @@ export default function SignInSheet() {
               <Button
                 size="small"
                 style={{ backgroundColor: '#1e1e1e', color: 'white' }}
-                disabled={!verificationIsValid}
-                onClick={() => {
-                  // Placeholder sign-in action
-                  console.log('Sign in with', code.label, phone, verificationCode);
-                }}
+                disabled={!verificationIsValid || verifying || otpVerified}
+                onClick={() => handleVerifyOtp()}
               >
-                Sign In
+                {otpVerified ? 'Verified' : verifying ? 'Verifying...' : 'Sign In'}
               </Button>
             ) : (
               <Button
                 size="small"
                 style={{ backgroundColor: '#1e1e1e', color: 'white' }}
-                disabled={!phoneIsValid || otpRequested}
-                onClick={() => {
-                  setShowVerification(true);
-                  setOtpRequested(true);
-                }}
+                disabled={!phoneIsValid || otpRequested || loadingOtp}
+                onClick={() => handleRequestOtp()}
               >
-                Get OTP
+                {loadingOtp ? 'Requesting...' : 'Get OTP'}
               </Button>
             )}
           </CardActions>
