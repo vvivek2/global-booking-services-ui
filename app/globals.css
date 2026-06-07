@@ -127,3 +127,19 @@
     @apply font-sans;
   }
 }
+
+@keyframes dots {
+  0% { content: ""; }
+  33% { content: "."; }
+  66% { content: ".."; }
+  100% { content: "..."; }
+}
+
+.loading-dots::after {
+  content: "";
+  display: inline-block;     /* REQUIRED */
+  width: 1.2em;              /* REQUIRED: space for dots */
+  margin-left: 4px;          /* optional spacing */
+  animation: dots 1s steps(3, end) infinite;
+}
+

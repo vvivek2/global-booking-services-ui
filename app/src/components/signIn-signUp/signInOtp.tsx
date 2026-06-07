@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { requestOtp, verifyOtp } from './otpApi';
+import { requestOtp, verifyOtp } from './utils.ts/otpApi';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";

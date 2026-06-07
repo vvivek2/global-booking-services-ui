@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import landingImage from './landingImage.jpeg';
-import SignInSheet from './signIn-signUp/signIn';
+import SignInSheet from './signIn-signUp/signInOtp';
+import SignInEmailSheet from './signIn-signUp/signInEmail';
 
 export default function Landing() {
 
@@ -34,7 +35,8 @@ export default function Landing() {
             </div>
           </div>
           <div className="flex-1 min-w-0 bg-black flex items-center justify-center">
-              <SignInSheet />
+              {/* <SignInSheet /> */}
+              <SignInEmailSheet />
           </div>
         </div>
       </section>
