@@ -12,7 +12,7 @@ export type RequestOtpPayload = {
 export type VerifyOtpPayload = RequestOtpPayload & { otp: string };
 
 export async function requestOtp(payload: RequestOtpPayload): Promise<RequestOtpResponse> {
-  const resp = await fetch('http://localhost:3001/otp/get', {
+  const resp = await fetch('http://localhost:8080/otp/get', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -29,7 +29,7 @@ export async function requestOtp(payload: RequestOtpPayload): Promise<RequestOtp
 }
 
 export async function verifyOtp(payload: VerifyOtpPayload): Promise<any> {
-  const resp = await fetch('http://localhost:3001/otp/verify', {
+  const resp = await fetch('http://localhost:8080/otp/verify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),

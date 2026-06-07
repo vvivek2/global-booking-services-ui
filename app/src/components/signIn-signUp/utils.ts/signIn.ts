@@ -9,7 +9,12 @@ export type SignInResponse = {
   userId: string;
 };
 
-export async function signInUser(payload: SignInPayload): Promise<any> {
+export type SignInResult = {
+  status: number;
+  data: SignInResponse;
+};
+
+export async function signInUser(payload: SignInPayload): Promise<SignInResult> {
   const resp = await fetch('http://localhost:8080/user/signIn', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -22,5 +27,5 @@ export async function signInUser(payload: SignInPayload): Promise<any> {
   }
 
   const data = await resp.json().catch(() => ({}));
-  return data as SignInResponse;
+  return { status: resp.status, data: data as SignInResponse };
 }

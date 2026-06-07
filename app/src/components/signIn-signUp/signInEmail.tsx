@@ -9,13 +9,11 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import RegisterSideSheet from './RegisterSidesheet';
 import { SignInPayload, signInUser } from './utils.ts/signIn';
-import { useRouter } from "next/navigation";
 
 export default function SignInEmailSheet() {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [loginValue, setLoginValue] = useState("");
   const [loginError, setLoginError] = useState("");
-  const router = useRouter();
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -40,9 +38,12 @@ export default function SignInEmailSheet() {
       const res = await signInUser(payload);
 
       if (res?.status === 200) {
-        setTimeout(() => {
-          router.push("/dashboard");
-        }, 1200);
+        if (typeof window !== "undefined") {
+          window.location.assign("/dashboard");
+        }
+      } else {
+        setErrorMessage("Sign in failed. Please try again.");
+        setIsSigningIn(false);
       }
     } catch (err: any) {
       setIsSigningIn(false);
