@@ -1,8 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-import landingImage from './landingImage.jpeg';
-import SignInSheet from './signIn-signUp/signInOtp';
 import SignInEmailSheet from './signIn-signUp/signInEmail';
 
 export default function Landing() {
@@ -25,13 +22,9 @@ export default function Landing() {
 
           {/* Left Image (full image visible, no cropping) */}
           <div
-            className="w-full md:w-1/2 bg-white"
+            className="w-full md:w-1/2 bg-white bg-cover bg-left-center min-h-[500px]"
             style={{
-              backgroundImage: `url(${landingImage.src})`,
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "left center",
-              backgroundSize: "cover",
-              minHeight: "500px",
+              backgroundImage: "url('/landingImage.jpeg')",
             }}
           ></div>
 
