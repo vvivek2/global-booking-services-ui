@@ -23,15 +23,17 @@ export default function Landing() {
       <section>
         <div className="flex flex-col md:flex-row items-stretch">
 
-          {/* Left Image */}
-          <div className="w-full md:w-1/2 relative min-h-[400px] md:min-h-[600px]">
-            <Image
-              src={landingImage}
-              alt="landingImage"
-              fill
-              className="object-cover object-left"
-            />
-          </div>
+          {/* Left Image (full image visible, no cropping) */}
+          <div
+            className="w-full md:w-1/2 bg-white"
+            style={{
+              backgroundImage: `url(${landingImage.src})`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "left center",
+              backgroundSize: "cover",
+              minHeight: "500px",
+            }}
+          ></div>
 
           {/* Right Login Panel */}
           <div className="w-full md:w-1/2 bg-black flex items-center justify-center p-10">
@@ -40,6 +42,7 @@ export default function Landing() {
 
         </div>
       </section>
+
 
 
 
