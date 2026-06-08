@@ -15,7 +15,7 @@ export type SignInResult = {
 };
 
 export async function signInUser(payload: SignInPayload): Promise<SignInResult> {
-  const resp = await fetch(`${process.env.REACT_APP_API_BASE_URL}/user/signIn`, {
+  const resp = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/signIn`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),

@@ -13,7 +13,7 @@ export type RegisterResponse = {
 };
 
 export async function registerUser(payload: RegisterPayload): Promise<any> {
-  const resp = await fetch(`${process.env.REACT_APP_API_BASE_URL}/user/register`, {
+  const resp = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
