@@ -21,29 +21,26 @@ export default function Landing() {
 
       {/* Hero */}
       <section>
-        <div className="flex flex-col md:flex-row items-stretch gap-0">
+        <div className="flex flex-col md:flex-row items-stretch">
 
           {/* Left Image */}
-          <div className="w-full md:w-1/2">
-            <div className="relative w-full aspect-video">
-              <Image
-                src={landingImage}
-                alt="landingImage"
-                fill
-                loading="eager"
-                sizes="100vw"
-                className="object-cover object-left"
-              />
-            </div>
+          <div className="w-full md:w-1/2 relative min-h-[400px] md:min-h-[600px]">
+            <Image
+              src={landingImage}
+              alt="landingImage"
+              fill
+              className="object-cover object-left"
+            />
           </div>
 
           {/* Right Login Panel */}
-          <div className="w-full md:w-1/2 bg-black flex items-center justify-center py-10">
+          <div className="w-full md:w-1/2 bg-black flex items-center justify-center p-10">
             <SignInEmailSheet />
           </div>
 
         </div>
       </section>
+
 
 
       {/* Stats */}
