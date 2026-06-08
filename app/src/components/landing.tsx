@@ -12,7 +12,7 @@ export default function Landing() {
       {/* Header */}
       <header className="bg-black">
         <div className="w-full px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="text-white font-bold text-xl">TS Company</div>
+          <div className="text-white font-bold text-xl">MK TotalCare</div>
           <nav className="flex items-center gap-4" style={{ fontFamily: 'Arial, sans-serif' }}>
             <a href="#" className="text-white hover:text-white whitespace-nowrap"><u>Business</u></a>
           </nav>
