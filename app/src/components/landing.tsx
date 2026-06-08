@@ -21,25 +21,30 @@ export default function Landing() {
 
       {/* Hero */}
       <section>
-        <div className="flex flex-row items-stretch gap-0">
-          <div className="flex-shrink-0 w-full min-w-0" style={{ maxWidth: 900 }}>
-            <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9' }}>
+        <div className="flex flex-col md:flex-row items-stretch gap-0">
+
+          {/* Left Image */}
+          <div className="w-full md:w-1/2">
+            <div className="relative w-full aspect-video">
               <Image
                 src={landingImage}
                 alt="landingImage"
                 fill
                 loading="eager"
-                sizes="(max-width: 900px) 100vw, 900px"
-                style={{ objectFit: 'cover', objectPosition: 'left center' }}
+                sizes="100vw"
+                className="object-cover object-left"
               />
             </div>
           </div>
-          <div className="flex-1 min-w-0 bg-black flex items-center justify-center">
-              {/* <SignInSheet /> */}
-              <SignInEmailSheet />
+
+          {/* Right Login Panel */}
+          <div className="w-full md:w-1/2 bg-black flex items-center justify-center py-10">
+            <SignInEmailSheet />
           </div>
+
         </div>
       </section>
+
 
       {/* Stats */}
       <section className="py-16">
