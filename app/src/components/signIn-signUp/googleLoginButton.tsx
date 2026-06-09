@@ -6,7 +6,7 @@ export default function GoogleLoginButton() {
   const handleGoogleResponse = async (response: any) => {
     const idToken = response.credential;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/googleSignIn`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/googleSignIn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idToken }),
