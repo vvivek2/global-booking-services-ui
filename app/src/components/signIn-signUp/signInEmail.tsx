@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import RegisterSideSheet from './RegisterSidesheet';
 import { SignInPayload, signInUser } from './utils.ts/signIn';
+import GoogleLoginButton from './googleLoginButton';
 
 export default function SignInEmailSheet() {
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -193,6 +194,17 @@ export default function SignInEmailSheet() {
               <Typography color="error">{errorMessage}</Typography>
             </Box>
           )}
+          <Box
+            sx={{
+              mt: 3,
+              ml: { xs: 0, sm: "120px" },
+              width: { xs: "100%", sm: "260px" },
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <GoogleLoginButton />
+          </Box>
         </CardContent>
       </Card>
 

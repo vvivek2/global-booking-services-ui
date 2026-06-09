@@ -28,9 +28,18 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          src="https://accounts.google.com/gsi/client"
+          async
+          defer
+        ></script>
+      </head>
+
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
       </body>
     </html>
   );
 }
+

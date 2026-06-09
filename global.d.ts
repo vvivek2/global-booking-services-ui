@@ -22,3 +22,12 @@ declare module '*.webp' {
   const src: string;
   export default src;
 }
+
+export {};
+declare global {
+  interface Window {
+    google: any;
+  }
+  const google: any;
+}
+
