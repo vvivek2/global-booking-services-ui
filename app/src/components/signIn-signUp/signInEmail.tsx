@@ -24,46 +24,38 @@ export default function SignInEmailSheet() {
   const isValidEmail = (value: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
+  // Disable button logic
+  const isFormInvalid =
+    !loginValue ||
+    !password ||
+    loginError !== "";
+
   const handleSignIn = async () => {
+    setErrorMessage("");
+
+    const payload: SignInPayload = {
+      emailId: isEmail(loginValue) ? loginValue : "",
+      mobileNumber: isPhone(loginValue) ? loginValue : "",
+      password,
+    };
+
     try {
-      setErrorMessage("");
-
-      const payload: SignInPayload = {
-        emailId: isEmail(loginValue) ? loginValue : "",
-        mobileNumber: isPhone(loginValue) ? loginValue : "",
-        password,
-      };
-
       setIsSigningIn(true);
 
       const res = await signInUser(payload);
 
       if (res?.status === 200) {
-        if (typeof window !== "undefined") {
-          window.location.assign("/dashboard");
-        }
-      } else {
-        setErrorMessage("Sign in failed. Please try again.");
-        setIsSigningIn(false);
+        window.location.assign("/dashboard");
+        return;
       }
+
+      // Friendly fallback
+      setErrorMessage("Invalid login details. Please try again.");
     } catch (err: any) {
+      // NEVER show backend raw error
+      setErrorMessage("Invalid login details. Please try again.");
+    } finally {
       setIsSigningIn(false);
-
-      console.log("FULL ERROR:", err);
-
-      let backendMessage = "";
-
-      if (typeof err?.response?.data === "string") {
-        backendMessage = err.response.data;
-      } else {
-        backendMessage =
-          err?.response?.data?.message ||
-          err?.response?.data?.error ||
-          err?.response?.data?.details ||
-          err?.message;
-      }
-
-      setErrorMessage(backendMessage || "Something went wrong. Please try again.");
     }
   };
 
@@ -88,7 +80,6 @@ export default function SignInEmailSheet() {
             Enter your email or mobile number to login.
           </Typography>
 
-          {/* GRID START */}
           <Box
             sx={{
               display: 'grid',
@@ -111,7 +102,7 @@ export default function SignInEmailSheet() {
                 setLoginValue(value);
                 setLoginError("");
 
-                if (value === "") {
+                if (!value) {
                   setLoginError("This field is required");
                   return;
                 }
@@ -160,40 +151,39 @@ export default function SignInEmailSheet() {
 
             <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
               <Button
-                variant="contained"
-                disabled={isSigningIn}
+                variant="outlined"
+                disabled={isSigningIn || isFormInvalid}
                 onClick={handleSignIn}
                 sx={{
-                  backgroundColor: isSigningIn ? "#1976d2" : undefined,
-                  color: "white",
-                  opacity: isSigningIn ? 1 : undefined,
+                  color: isFormInvalid ? "gray" : "#1976d2",
+                  borderColor: isFormInvalid ? "gray" : "#1976d2",
+                  "&:hover": {
+                    borderColor: isFormInvalid ? "gray" : "#115293",
+                    backgroundColor: isFormInvalid ? "transparent" : "rgba(25,118,210,0.08)",
+                  },
                   "&.Mui-disabled": {
-                    backgroundColor: "#1976d2",
-                    color: "white",
-                    opacity: 1,
+                    color: "gray",
+                    borderColor: "gray",
+                    opacity: 0.6,
                   },
                 }}
               >
-                {isSigningIn ? (
-                  <span className="loading-dots">Logging In</span>
-                ) : (
-                  "Sign In"
-                )}
+                {isSigningIn ? "Logging In..." : "Sign In"}
               </Button>
+
 
               <Button variant="outlined" onClick={() => setRegisterOpen(true)}>
                 Register
               </Button>
             </Box>
           </Box>
-          {/* GRID END */}
 
-          {/* ERROR MESSAGE OUTSIDE GRID, ALIGNED WITH BUTTON */}
           {errorMessage && (
             <Box sx={{ mt: 1, ml: "120px" }}>
               <Typography color="error">{errorMessage}</Typography>
             </Box>
           )}
+
           <Box
             sx={{
               mt: 3,
