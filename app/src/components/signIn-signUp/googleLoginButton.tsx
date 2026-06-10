@@ -19,16 +19,28 @@ export default function GoogleLoginButton() {
   };
 
   useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
-      callback: handleGoogleResponse,
-    });
+    const interval = setInterval(() => {
+      const google = window.google;
+      const parent = document.getElementById("googleBtn");
 
-    google.accounts.id.renderButton(
-      document.getElementById("googleBtn")!,    
-      { theme: "outline", size: "large" }
-    );
+      if (google && parent) {
+        google.accounts.id.initialize({
+          client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+          callback: handleGoogleResponse,
+          auto_select: true,
+        });
+
+        google.accounts.id.renderButton(parent, {
+          type: "standard",
+          theme: "outline",
+          size: "large",
+        });
+
+        clearInterval(interval);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
   }, []);
 
   return <div id="googleBtn"></div>;
