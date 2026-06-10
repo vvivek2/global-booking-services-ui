@@ -1,3 +1,4 @@
+import HeaderBar from "@/components/HeaderBar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
@@ -17,13 +18,6 @@ export default function ServicesDashboard() {
 
   return (
     <div>
-      {/* Header */}
-      <header className="bg-gray-50">
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="text-black font-bold text-xl">MK TotalCare</div>
-        </div>
-      </header>
-
       {/* Hero */}
       <section className="px-4 sm:px-6 lg:px-8 py-12">
 
