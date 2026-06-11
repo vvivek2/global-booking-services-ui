@@ -11,7 +11,7 @@ import RegisterSideSheet from './RegisterSidesheet';
 import { SignInPayload, signInUser } from './utils.ts/signIn';
 import GoogleLoginButton from './googleLoginButton';
 
-export default function SignInEmailSheet({onSuccess}: {onSuccess: () => void}) {
+export default function SignInEmailSheet({ onSuccess }: { onSuccess: () => void }) {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [loginValue, setLoginValue] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -85,7 +85,10 @@ export default function SignInEmailSheet({onSuccess}: {onSuccess: () => void}) {
           <Box
             sx={{
               display: 'grid',
-              gridTemplateColumns: '120px 1fr',
+              gridTemplateColumns: {
+                xs: '1fr',
+                sm: '120px 1fr'
+              },
               alignItems: 'center',
               columnGap: 2,
               rowGap: 2,

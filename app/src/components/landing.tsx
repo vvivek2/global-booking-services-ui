@@ -29,7 +29,7 @@ export default function Landing() {
 
           {/* Left Image (full image visible, no cropping) */}
           <div
-            className="w-full md:w-1/2 bg-white bg-cover bg-left min-h-[500px]"
+            className="w-full md:w-1/2 bg-white bg-contain md:bg-cover bg-no-repeat bg-center h-[260px] md:min-h-[500px]"
             style={{
               backgroundImage: "url('/landingImage.jpeg')",
             }}
