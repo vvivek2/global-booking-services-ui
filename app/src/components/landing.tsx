@@ -2,13 +2,26 @@
 
 import HeaderBar from '@/components/HeaderBar';
 import SignInEmailSheet from './signIn-signUp/signInEmail';
+import { useEffect, useState } from 'react';
+import DoctorTypeDropdown from './DoctorTypeDropdown';
 
 export default function Landing() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const logged = localStorage.getItem("isLoggedIn");
+    setIsLoggedIn(logged === "true");
+  }, []);
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
 
   return (
     <div>
       {/* Header */}
-      <HeaderBar showBusiness={true}/>
+      <HeaderBar showBusiness={!isLoggedIn}/>
 
       {/* Hero */}
       <section>
@@ -16,7 +29,7 @@ export default function Landing() {
 
           {/* Left Image (full image visible, no cropping) */}
           <div
-            className="w-full md:w-1/2 bg-white bg-cover bg-left-center min-h-[500px]"
+            className="w-full md:w-1/2 bg-white bg-cover bg-left min-h-[500px]"
             style={{
               backgroundImage: "url('/landingImage.jpeg')",
             }}
@@ -24,7 +37,11 @@ export default function Landing() {
 
           {/* Right Login Panel */}
           <div className="w-full md:w-1/2 bg-black flex items-center justify-center p-10">
-            <SignInEmailSheet />
+            {!isLoggedIn ? (
+              <SignInEmailSheet onSuccess={handleLoginSuccess} />
+            ) : (
+              <DoctorTypeDropdown />
+            )}
           </div>
 
         </div>

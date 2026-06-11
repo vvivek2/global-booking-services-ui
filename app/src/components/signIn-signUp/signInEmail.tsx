@@ -11,7 +11,7 @@ import RegisterSideSheet from './RegisterSidesheet';
 import { SignInPayload, signInUser } from './utils.ts/signIn';
 import GoogleLoginButton from './googleLoginButton';
 
-export default function SignInEmailSheet() {
+export default function SignInEmailSheet({onSuccess}: {onSuccess: () => void}) {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [loginValue, setLoginValue] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -45,7 +45,9 @@ export default function SignInEmailSheet() {
       const res = await signInUser(payload);
 
       if (res?.status === 200) {
-        window.location.assign("/dashboard");
+        localStorage.setItem("isLoggedIn", "true");
+        window.location.reload();
+        onSuccess();
         return;
       }
 

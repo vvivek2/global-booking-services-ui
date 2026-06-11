@@ -22,13 +22,11 @@ export default function AccountMenu() {
   };
 
   const handleLogout = () => {
-    // Clear tokens or session
-    localStorage.removeItem("authToken");
+    localStorage.removeItem("isLoggedIn");
     sessionStorage.clear();
-
-    // Redirect to login
     window.location.assign("/");
   };
+
 
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>

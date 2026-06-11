@@ -1,10 +1,19 @@
 "use client";
 
+import registerBusiness from "@/app/business/register/page";
 import AccountMenu from "@/app/src/components/signIn-signUp/AccountMenu";
+import { useEffect, useState } from "react";
 
 
 
 export default function HeaderBar({ showBusiness = false, showAvatar = false }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+  useEffect(() => {
+    const logged = localStorage.getItem("isLoggedIn");
+    setIsLoggedIn(logged === "true");
+  }, []);
+
   return (
     <header
       style={{
@@ -24,15 +33,15 @@ export default function HeaderBar({ showBusiness = false, showAvatar = false }) 
       {/* Right side content */}
       <div className="flex items-center gap-6">
 
-        {showBusiness && (
+        {showBusiness && !isLoggedIn &&(
           <nav className="flex items-center gap-4 font-sans">
-            <a href="#" className="text-white hover:text-gray-300 transition">
-              <u>Business</u>
+            <a href="business/register" className="text-white hover:text-gray-300 transition">
+              <u>Register as a Business</u>
             </a>
           </nav>
         )}
 
-        {showAvatar && <AccountMenu />}
+        {isLoggedIn && <AccountMenu />}
       </div>
     </header>
   );
